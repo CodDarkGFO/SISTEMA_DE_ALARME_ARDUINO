@@ -1,0 +1,27 @@
+/*
+Sensor de presença na porta 1
+LED na porta 2
+Buzzer na porta 3
+*/
+
+// Definição das constantes para as portas
+const int sensorPresenca = 9;
+
+
+// Variável para armazenar o estado do sensor
+int estadoSensor = 0;
+
+void setup() {
+  // Define os pinos como saída ou entrada
+  Serial.begin(9600);
+  pinMode(sensorPresenca, INPUT);
+}
+
+void loop() {
+  // Lê o estado do sensor de presença
+  estadoSensor = digitalRead(sensorPresenca);
+  Serial.print("Leitura Sensor PIR: ");
+  Serial.println(estadoSensor);
+  delay(1000);
+
+}
