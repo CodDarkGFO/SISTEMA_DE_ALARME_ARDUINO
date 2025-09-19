@@ -1,0 +1,58 @@
+/*
+Sensor de presença na porta 1
+LED na porta 2
+Buzzer na porta 3
+*/
+
+// Definição das constantes para as portas
+const int sensorPresenca = 2;
+const int led = 3;
+const int buzzer = 11;
+
+int tempo = 100; //variável usada para definir o tempo de acionamento do buzzer
+int frequencia = 0; //variável usada para armazenar a frequencia que será usada no acionamento do buzzer
+
+// Variável para armazenar o estado do sensor
+int estadoSensor = 0;
+
+void setup() {
+  // Define os pinos como saída ou entrada
+  pinMode(led, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(sensorPresenca, INPUT);
+}
+
+void loop() {
+  // Lê o estado do sensor de presença
+  estadoSensor = digitalRead(sensorPresenca);
+
+  // Se o sensor detectar presença, aciona o alarme
+  if (estadoSensor == HIGH) {
+    acionarAlarme();
+  } else {
+    // Caso contrário, desliga o LED e o buzzer
+    digitalWrite(led, LOW);
+    noTone(buzzer);
+  }
+}
+
+void acionarAlarme() {
+  // Faz o LED piscar e aciona o buzzer como um alarme de sirene
+  for (int i = 0; i < 20; i++) {
+    for (frequencia = 150; frequencia < 1800; frequencia += 1) { //Define frequencia igual a 150; verifica se frequencia é menor que 1800; realiza a soma frequencia = frequencia + 1
+      digitalWrite(led, HIGH);
+      tone(buzzer, frequencia, tempo); //Aciona o led com frequência definida pelo for e tempo igual a 100 milissegundos
+      digitalWrite(led, LOW);
+      delay(1); //delay de 1 milissegundos
+    }
+    for (frequencia = 1800; frequencia > 150; frequencia -= 1) { //Define frequencia igual a 1800; verifica se frequencia é maior que 150; realiza a subtração frequencia = frequencia - 1
+      digitalWrite(led, HIGH);
+      tone(buzzer, frequencia, tempo); //Aciona o led com frequência definida pelo for e tempo igual a 100 milissegundos
+      digitalWrite(led, LOW);
+      delay(1); //delay de 1 milissegundos
+    }
+  }
+  // Aguarda 1 segundo antes de desligar completamente o buzzer
+  delay(1000);
+  noTone(buzzer);
+}
