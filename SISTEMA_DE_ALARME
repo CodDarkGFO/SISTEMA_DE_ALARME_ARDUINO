@@ -20,19 +20,24 @@ void setup() {
   pinMode(led, OUTPUT);
   pinMode(buzzer, OUTPUT);
   pinMode(sensorPresenca, INPUT);
+
+  Serial.begin(9600);
 }
 
 void loop() {
   // Lê o estado do sensor de presença
   estadoSensor = digitalRead(sensorPresenca);
-
+  Serial.print("Leitura sensor PIR: ");
+  Serial.println(estadoSensor);
   // Se o sensor detectar presença, aciona o alarme
-  if (estadoSensor == HIGH) {
+  if (estadoSensor = 1) {
+  //if (estadoSensor == HIGH) {
     acionarAlarme();
   } else {
     // Caso contrário, desliga o LED e o buzzer
-    digitalWrite(led, LOW);
-    noTone(buzzer);
+    desligaAlarme();
+    //digitalWrite(led, LOW);
+    //noTone(buzzer);
   }
 }
 
@@ -52,7 +57,15 @@ void acionarAlarme() {
       delay(1); //delay de 1 milissegundos
     }
   }
+
   // Aguarda 1 segundo antes de desligar completamente o buzzer
   delay(1000);
   noTone(buzzer);
 }
+
+
+    void desligaAlarme() {
+    digitalWrite(led, LOW);
+    noTone(buzzer);
+
+    }
